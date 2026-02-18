@@ -1,4 +1,6 @@
 package com.pet_project.budget_planner.dto;
 
-public record CategoryRequestDTO(String name, int budget) {
+import com.pet_project.budget_planner.constants.BudgetType;
+
+public record CategoryRequestDTO(String name, int budget, BudgetType type, long userId) {
 }

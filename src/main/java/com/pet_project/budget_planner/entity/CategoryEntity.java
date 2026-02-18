@@ -1,9 +1,8 @@
 package com.pet_project.budget_planner.entity;
 
+import com.pet_project.budget_planner.constants.BudgetType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -18,6 +17,12 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "type")
+    private BudgetType type;
+
     @Column(name = "budget")
     private int budget;
+
+    @Column(name = "user_id")
+    long userId;
 }

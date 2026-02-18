@@ -3,6 +3,7 @@ package com.pet_project.budget_planner.controller;
 
 import com.pet_project.budget_planner.dto.CategoryRequestDTO;
 import com.pet_project.budget_planner.dto.ExpenseDTO;
+import com.pet_project.budget_planner.service.CategoryService;
 import com.pet_project.budget_planner.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 public class PlannerController {
 
     private final ExpenseService expenseService;
+    private final CategoryService categoryService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategory(@PathVariable("id") long expenseId) {
@@ -26,9 +28,16 @@ public class PlannerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> setBudget(@RequestBody List<CategoryRequestDTO> categoryRequestList) {
-        return new ResponseEntity<>("Budget for category is set", HttpStatus.OK);
+    public ResponseEntity<?> setBudget(@RequestBody CategoryRequestDTO categoryRequest) {
+        long id = categoryService.setBudget(categoryRequest);
+        return new ResponseEntity<>(String.format("Budget for category %d is set", id), HttpStatus.OK);
     }
+
+    @GetMapping("/limits/{id}")
+    public ResponseEntity<?> getAllLimits(@PathVariable("id") long userId) {
+        return new ResponseEntity<>(categoryService.getAllCategoriesForUser(userId), HttpStatus.OK);
+    }
+
     @PostMapping("/addexpense")
     public ResponseEntity<?> addExpense(@RequestBody ExpenseDTO expenseDTO) {
         Long expenseId = expenseService.addExpense(expenseDTO);
